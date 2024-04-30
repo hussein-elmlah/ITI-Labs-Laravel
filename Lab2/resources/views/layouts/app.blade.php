@@ -22,9 +22,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/posts">All Posts</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/posts/create">Create</a>
-                </li>
+                </li> -->
             </ul>
 
         </div>
