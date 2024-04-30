@@ -40,7 +40,7 @@ class PostController extends Controller
 
         $post = Post::create($request->all());
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+        return redirect()->route('posts.index');
     }
 
     public function edit($id)
@@ -65,7 +65,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $post->update($request->all());
-            return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+            return redirect()->route('posts.index');
         }
 
         return abort(404);
@@ -76,7 +76,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $post->delete();
-            return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
+            return redirect()->route('posts.index');
         }
 
         return abort(404);

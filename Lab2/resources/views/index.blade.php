@@ -3,12 +3,6 @@
 @section("content")
 <h1>All Posts</h1>
 
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-
 @if(count($posts) > 0)
     <table class="table">
         <thead class="table-dark">
