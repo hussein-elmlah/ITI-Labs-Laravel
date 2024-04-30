@@ -4,7 +4,7 @@
 
 <div class="container">
     <h1>All Posts</h1>
-    <table class="table table-striped table-hover">
+    <table class="table table-hover">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
