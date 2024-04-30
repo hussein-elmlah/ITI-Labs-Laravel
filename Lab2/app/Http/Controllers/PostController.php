@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
-    private $posts = [
-        ['id' => 1, 'title' => 'title1', 'description' => 'description1', 'author' => 'Ahmed Ali', 'createdAt' => '11/11/2024', 'updatedAt' => '11/11/2024', 'image' => 'img1.jpg'],
-        ['id' => 2, 'title' => 'title2', 'description' => 'description2', 'author' => 'Ahmed Ali', 'createdAt' => '11/11/2024', 'updatedAt' => '11/11/2024', 'image' => 'img2.jpeg'],
-        ['id' => 3, 'title' => 'title3', 'description' => 'description3', 'author' => 'Ahmed Ali', 'createdAt' => '11/11/2024', 'updatedAt' => '11/11/2024', 'image' => 'img3.jpeg'],
-        ['id' => 4, 'title' => 'title4', 'description' => 'description4', 'author' => 'Ahmed Ali', 'createdAt' => '11/11/2024', 'updatedAt' => '11/11/2024', 'image' => 'img4.jpeg']
-    ];
-
     public function index()
     {
-        return view("index", ["posts" => $this->posts]);
+        $posts = Post::all();
+        return view("index", ["posts" => $posts]);
     }
 
     public function show($id)
     {
-        $post = $this->getPostById($id);
+        $post = Post::find($id);
         return $post ? view('show', ["post" => $post]) : abort(404);
     }
 
@@ -29,20 +25,60 @@ class PostController extends Controller
         return view("create");
     }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'author' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        $post = Post::create($request->all());
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+    }
+
     public function edit($id)
     {
-        $post = $this->getPostById($id);
+        $post = Post::find($id);
         return $post ? view('edit', ["post" => $post]) : abort(404);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'author' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        $post = Post::find($id);
+        if ($post) {
+            $post->update($request->all());
+            return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+        }
+
+        return abort(404);
     }
 
     public function destroy($id)
     {
-        $post = $this->getPostById($id);
-        return $post ? view('destroy', ["post" => $post]) : abort(404);
-    }
+        $post = Post::find($id);
+        if ($post) {
+            $post->delete();
+            return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
+        }
 
-    private function getPostById($id)
-    {
-        return $id <= count($this->posts) ? $this->posts[$id - 1] : null;
+        return abort(404);
     }
 }
