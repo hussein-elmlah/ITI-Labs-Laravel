@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -27,20 +26,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
-
         $post = Post::create($request->all());
-
-        return redirect()->route('posts.index');
+        return to_route('posts.index');
     }
 
     public function edit($id)
@@ -51,21 +38,10 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
-
         $post = Post::find($id);
         if ($post) {
             $post->update($request->all());
-            return redirect()->route('posts.index');
+            return to_route('posts.index');
         }
 
         return abort(404);
@@ -76,7 +52,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $post->delete();
-            return redirect()->route('posts.index');
+            return to_route('posts.index');
         }
 
         return abort(404);
