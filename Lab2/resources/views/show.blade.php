@@ -19,6 +19,6 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('posts.home') }}" class="btn btn-primary my-4">Back</a>
+        <a href="{{ route('posts.index') }}" class="btn btn-primary my-4">Back</a>
     </div>
 @endsection

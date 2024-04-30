@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+
     public function index()
     {
-        $posts = Post::all();
-        return view("index", ["posts" => $posts]);
+        $this->posts = Post::all();
+        return view("index", ["posts" => $this->posts]);
     }
 
     public function show($id)
     {
-        $post = Post::find($id);
-        return $post ? view('show', ["post" => $post]) : abort(404);
+        $post = Post::findOrFail($id);
+        return view('show', ["post" => $post]);
     }
 
     public function create()
@@ -27,58 +27,33 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
-
         $post = Post::create($request->all());
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+        $this->posts = Post::all();
+        return view('index', ["posts" => $this->posts]);
     }
 
     public function edit($id)
     {
-        $post = Post::find($id);
-        return $post ? view('edit', ["post" => $post]) : abort(404);
+        $post = Post::findOrFail($id);
+        return view('edit', ["post" => $post]);
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
-
-        $post = Post::find($id);
-        if ($post) {
-            $post->update($request->all());
-            return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
-        }
-
-        return abort(404);
+        return view('edit', ["post" => $post]);
     }
 
     public function destroy($id)
     {
-        $post = Post::find($id);
-        if ($post) {
-            $post->delete();
-            return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
-        }
+        $post = Post::findOrFail($id);
+        $post->delete();
 
-        return abort(404);
+        $this->posts = Post::all();
+        return view('index', ["posts" => $this->posts]);
     }
 }
+
