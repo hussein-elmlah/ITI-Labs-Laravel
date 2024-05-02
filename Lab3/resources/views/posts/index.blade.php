@@ -52,11 +52,17 @@
         </tbody>
     </table>
 
-<div class="row text-center justify-content-center ">
-    <div class="w-auto text-center">
-        {{ $posts->links() }}
+    <div class="row text-center justify-content-center d-flex">
+        <div class="w-auto text-center d-inline-block">
+            <div class="w-auto text-center ">
+                {{ $posts->links() }}
+            </div>
+        </div>
+        <form action="{{ route('posts.restore.all') }}" method="POST" class="" style="right: 0px;">
+            @csrf
+            <button type="submit" class="btn btn btn-warning">Restore All Deleted</button>
+        </form>
     </div>
-</div>
 
 @else
     <p>No posts found!</p>

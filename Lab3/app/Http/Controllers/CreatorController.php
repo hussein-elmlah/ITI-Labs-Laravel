@@ -116,4 +116,22 @@ class CreatorController extends Controller
 
         return abort(404);
     }
+
+    public function restore($id)
+    {
+        $creator = Creator::withTrashed()->find($id);
+
+        if ($creator) {
+            $creator->restore();
+            return redirect()->route('creators.index');
+        }
+
+        return abort(404);
+    }
+
+    public function restoreAll()
+    {
+        Creator::withTrashed()->restore();
+        return redirect()->route('creators.index');
+    }
 }

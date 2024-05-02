@@ -26,6 +26,7 @@ Route::get("/posts/{id}", [PostController::class,'show'])->name('posts.show');
 Route::get("/posts/edit/{id}", [PostController::class,'edit'])->name('posts.edit');
 Route::put("/posts/update/{id}", [PostController::class,'update'])->name('posts.update');
 Route::delete("/posts/delete/{id}", [PostController::class,'destroy'])->name('posts.delete');
+Route::post('posts/restore-all', [PostController::class,'restoreAll'])->name('posts.restore.all');
 
 Route::get('/creators',[CreatorController::class,'index'])->name('creators.index');
 Route::get("/creators/create",[CreatorController::class,'create'])->name('creators.create');
@@ -34,6 +35,7 @@ Route::get("/creators/{id}", [CreatorController::class,'show'])->name('creators.
 Route::get("/creators/edit/{id}", [CreatorController::class,'edit'])->name('creators.edit');
 Route::put("/creators/update/{id}", [CreatorController::class,'update'])->name('creators.update');
 Route::delete("/creators/delete/{id}", [CreatorController::class,'destroy'])->name('creators.delete');
+Route::post('creators/restore-all', [CreatorController::class,'restoreAll'])->name('creators.restore.all');
 
 // Route::resource('posts', PostController::class);
 // Route::resource('creators', CreatorController::class);

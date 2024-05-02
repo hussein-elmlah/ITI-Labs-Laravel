@@ -118,4 +118,22 @@ class PostController extends Controller
 
         return abort(404);
     }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->find($id);
+
+        if ($post) {
+            $post->restore();
+            return redirect()->route('posts.index');
+        }
+
+        return abort(404);
+    }
+
+    public function restoreAll()
+    {
+        Post::withTrashed()->restore();
+        return redirect()->route('posts.index');
+    }
 }

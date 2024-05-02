@@ -3,7 +3,7 @@
 @section("content")
 <h1>All Creators</h1>
 
-<a href="{{ route('creators.create') }}" class="btn btn-success my-3">Create New Creator</a>
+<a href="{{ route('creators.create') }}" class="btn btn btn-success my-3">Create New Creator</a>
 
 @if(count($creators) > 0)
     <table class="table">
@@ -46,10 +46,14 @@
         </tbody>
     </table>
 
-    <div class="row text-center justify-content-center ">
-        <div class="w-auto text-center">
-            {{ $creators->links() }}
-        </div>
+    <div class="row text-center justify-content-center d-flex">
+            <div class="w-auto text-center ">
+                {{ $creators->links() }}
+            </div>
+        <form action="{{ route('creators.restore.all') }}" method="POST" class="" style="right: 0px;">
+            @csrf
+            <button type="submit" class="btn btn btn-warning">Restore All Deleted</button>
+        </form>
     </div>
 
 @else
