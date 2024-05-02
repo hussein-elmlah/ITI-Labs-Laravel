@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::get("/posts/edit/{id}", [PostController::class,'edit'])->name('posts.edit
 Route::put("/posts/update/{id}", [PostController::class,'update'])->name('posts.update');
 Route::delete("/posts/delete/{id}", [PostController::class,'destroy'])->name('posts.delete');
 Route::post('posts/restore-all', [PostController::class,'restoreAll'])->name('posts.restore.all');
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/creators',[CreatorController::class,'index'])->name('creators.index');
 Route::get("/creators/create",[CreatorController::class,'create'])->name('creators.create');

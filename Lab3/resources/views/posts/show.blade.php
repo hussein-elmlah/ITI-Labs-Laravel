@@ -23,4 +23,34 @@
             </div>
         </div>
     </div>
+
+    <div  class="comments-section bg-white p-4 rounded">
+        <h2>Comments</h2>
+        @forelse ($post->comments as $comment)
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text">{{ $comment->content }}</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Posted by: {{ $comment->created_at->diffForHumans() }}
+                </div>
+            </div>
+        @empty
+            <p>No comments yet.</p>
+        @endforelse
+        <div class="card mt-5">
+            <div class="card-body">
+                <h3 class="card-title">Add Comment</h3>
+                <form action="{{ route('comments.store', $post->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="comment-content">Comment:</label>
+                        <textarea class="form-control" id="comment-content" name="content" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
