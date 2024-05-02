@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCreatorRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreCreatorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:creators,email',
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:10|max:255',
+            'creator_id' => 'required|exists:creators,id', // Ensure creator_id exists in creators table
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
         ];
     }
 }

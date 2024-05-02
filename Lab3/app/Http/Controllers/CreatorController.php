@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreCreatorRequest;
 use App\Http\Requests\UpdateCreatorRequest;
 use App\Models\Creator;
@@ -15,7 +16,8 @@ class CreatorController extends Controller
      */
     public function index()
     {
-        //
+        $creators = Creator::all();
+        return view('creators.index', compact('creators'));
     }
 
     /**
@@ -25,7 +27,7 @@ class CreatorController extends Controller
      */
     public function create()
     {
-        //
+        return view('creators.create');
     }
 
     /**
@@ -36,7 +38,10 @@ class CreatorController extends Controller
      */
     public function store(StoreCreatorRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $creator = Creator::create($validated);
+
+        return redirect()->route('creators.index');
     }
 
     /**
@@ -47,7 +52,7 @@ class CreatorController extends Controller
      */
     public function show(Creator $creator)
     {
-        //
+        return view('creators.show', compact('creator'));
     }
 
     /**
@@ -58,7 +63,7 @@ class CreatorController extends Controller
      */
     public function edit(Creator $creator)
     {
-        //
+        return view('creators.edit', compact('creator'));
     }
 
     /**
@@ -70,7 +75,10 @@ class CreatorController extends Controller
      */
     public function update(UpdateCreatorRequest $request, Creator $creator)
     {
-        //
+        $validated = $request->validated();
+        $creator->update($validated);
+
+        return redirect()->route('creators.index');
     }
 
     /**
@@ -81,6 +89,8 @@ class CreatorController extends Controller
      */
     public function destroy(Creator $creator)
     {
-        //
+        $creator->delete();
+
+        return redirect()->route('creators.index');
     }
 }

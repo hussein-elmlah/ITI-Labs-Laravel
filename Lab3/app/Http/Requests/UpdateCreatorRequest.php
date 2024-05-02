@@ -13,7 +13,7 @@ class UpdateCreatorRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateCreatorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:creators,email,' . $this->creator->id, // Ensure unique email except for itself
         ];
     }
 }

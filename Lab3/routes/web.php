@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CreatorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,6 @@ Route::get("/posts/{id}", [PostController::class,'show'])->name('post.show');
 Route::get("/posts/edit/{id}", [PostController::class,'edit'])->name('post.edit');
 Route::put("/posts/update/{id}", [PostController::class,'update'])->name('post.update');
 Route::delete("/posts/delete/{id}", [PostController::class,'destroy'])->name('post.delete');
+
+// Route::resource('posts', PostController::class);
+Route::resource('creators', CreatorController::class);
