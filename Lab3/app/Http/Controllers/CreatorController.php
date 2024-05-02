@@ -16,7 +16,7 @@ class CreatorController extends Controller
      */
     public function index()
     {
-        $creators = Creator::all();
+        $creators = Creator::paginate(5,['*'],'creators');
         return view('creators.index', compact('creators'));
     }
 
@@ -47,50 +47,73 @@ class CreatorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Creator  $creator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Creator $creator)
+    public function show($id)
     {
-        return view('creators.show', compact('creator'));
+        $creator = Creator::find($id);
+
+        if ($creator) {
+            return view('creators.show', compact('creator'));
+        }
+
+        return abort(404);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Creator  $creator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Creator $creator)
+    public function edit($id)
     {
-        return view('creators.edit', compact('creator'));
+        $creator = Creator::find($id);
+
+        if ($creator) {
+            return view('creators.edit', compact('creator'));
+        }
+
+        return abort(404);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateCreatorRequest  $request
-     * @param  \App\Models\Creator  $creator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCreatorRequest $request, Creator $creator)
+    public function update(UpdateCreatorRequest $request, $id)
     {
-        $validated = $request->validated();
-        $creator->update($validated);
+        $creator = Creator::find($id);
 
-        return redirect()->route('creators.index');
+        if ($creator) {
+            $validated = $request->validated();
+            $creator->update($validated);
+
+            return redirect()->route('creators.index');
+        }
+
+        return abort(404);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Creator  $creator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Creator $creator)
+    public function destroy($id)
     {
-        $creator->delete();
+        $creator = Creator::find($id);
 
-        return redirect()->route('creators.index');
+        if ($creator) {
+            $creator->delete();
+            return redirect()->route('creators.index');
+        }
+
+        return abort(404);
     }
 }

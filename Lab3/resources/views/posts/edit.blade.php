@@ -15,7 +15,7 @@
     @endif
 
     @if($post)
-    <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT') <div class="mb-3">
             <label for="title" class="form-label">Title:</label>

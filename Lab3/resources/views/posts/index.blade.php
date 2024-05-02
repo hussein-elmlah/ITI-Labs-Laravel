@@ -28,15 +28,15 @@
                 <td>{{$post['created_at']}}</td>
                 <td>{{$post['updated_at']}}</td>
                 <td>
-                    <x-button-component class="btn-info" href="{{ route('post.show', $post['id']) }}">
+                    <x-button-component class="btn-info" href="{{ route('posts.show', $post['id']) }}">
                         Show
                     </x-button-component>
 
-                    <x-button-component class="btn-secondary" href="{{ route('post.edit', $post['id']) }}">
+                    <x-button-component class="btn-secondary" href="{{ route('posts.edit', $post['id']) }}">
                         Edit
                     </x-button-component>
 
-                    <form action="{{ route('post.delete', $post['id']) }}" method="POST" style="display: inline-block">
+                    <form action="{{ route('posts.delete', $post['id']) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
@@ -58,6 +58,6 @@
     <p>No posts found!</p>
 @endif
 
-<a href="{{ route('post.create') }}" class="btn btn-success">Create New Post</a>
+<a href="{{ route('posts.create') }}" class="btn btn-success">Create New Post</a>
 
 @endsection

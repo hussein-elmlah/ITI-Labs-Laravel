@@ -16,20 +16,20 @@ class PostController extends Controller
         // return view("index", ["posts" => $posts]);
 
         $posts = Post::paginate(5,['*'],'posts');
-        return view('index', compact('posts'));
+        return view('posts.index', compact('posts'));
 
     }
 
     public function show($id)
     {
         $post = Post::find($id);
-        return $post ? view('show', ["post" => $post]) : abort(404);
+        return $post ? view('posts.show', ["post" => $post]) : abort(404);
     }
 
     public function create()
     {
         $creators = Creator::all();
-        return view('create', compact('creators'));
+        return view('posts.create', compact('creators'));
     }
 
     private function file_operations($request)
@@ -88,7 +88,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return $post ? view('edit', ["post" => $post]) : abort(404);
+        return $post ? view('posts.edit', ["post" => $post]) : abort(404);
     }
 
     public function update(Request $request, $id)

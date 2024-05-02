@@ -25,7 +25,7 @@ class UpdateCreatorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:creators,email,' . $this->creator->id, // Ensure unique email except for itself
+            'email' => 'required|string|email|unique:creators,email,' . $this->id, // Ensure unique email except for itself
         ];
     }
 }
