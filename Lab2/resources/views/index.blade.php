@@ -11,7 +11,10 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Author</th>
-                <th>Action</th>
+                <th>Image</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +24,18 @@
                 <td>{{ $post['title'] }}</td>
                 <td>{{ Str::limit($post['description'], 50) }}</td>
                 <td>{{ $post['author'] }}</td>
+                <td><img src="{{ asset($post->image) }}" alt="" class="" style="width:80px; height:80px"></td>
+                <td>{{$post['created_at']}}</td>
+                <td>{{$post['updated_at']}}</td>
                 <td>
-                    <a href="{{ route('post.show', $post['id']) }}" class="btn btn-sm btn-info">Show</a>
-                    <a href="{{ route('post.edit', $post['id']) }}" class="btn btn-sm btn-secondary">Edit</a>
+                    <x-button-component class="btn-info" href="{{ route('post.show', $post['id']) }}">
+                        Show
+                    </x-button-component>
+
+                    <x-button-component class="btn-secondary" href="{{ route('post.edit', $post['id']) }}">
+                        Edit
+                    </x-button-component>
+
                     <form action="{{ route('post.delete', $post['id']) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')

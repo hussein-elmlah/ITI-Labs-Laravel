@@ -24,9 +24,36 @@ class PostController extends Controller
         return view("create");
     }
 
+    private function file_operations($request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $fileName = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $intial_filePath = $image->store('images', 'post_upload');
+
+            $filePath = "images/posts/" . $intial_filePath ;
+
+            return $filePath;
+        }
+
+        return null;
+    }
+
     public function store(Request $request)
     {
-        $post = Post::create($request->all());
+        $requestParams = request();
+        $filePath = $this->file_operations($requestParams);
+
+        $post = new Post();
+
+        $post->title = $requestParams['title'];
+        $post->description = $requestParams['description'];
+        $post->author = $requestParams['author'];
+        $post->image = $filePath;
+        $post->save();
+
         return to_route('posts.index');
     }
 
