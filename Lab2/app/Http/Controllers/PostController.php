@@ -81,7 +81,13 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
         if ($post) {
+
+            if (file_exists(public_path('' . $post->image))) {
+                unlink(public_path('' . $post->image));
+            }
+
             $post->delete();
             return to_route('posts.index');
         }
