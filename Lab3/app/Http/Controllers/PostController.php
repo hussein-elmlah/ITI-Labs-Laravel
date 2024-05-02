@@ -38,7 +38,7 @@ class PostController extends Controller
             $intial_filePath = $image->store('images', 'post_upload');
 
             $filePath = "images/posts/" . $intial_filePath ;
-`
+
             return $filePath;
         }
 
