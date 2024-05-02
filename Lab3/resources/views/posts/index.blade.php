@@ -32,9 +32,10 @@
                 <td>{{ Carbon\Carbon::parse($post->updated_at)->format('d/m/Y') }}</td>
 
                 <td>
-                    <x-button-component class="btn-info" href="{{ route('posts.show', $post['id']) }}">
+                    {{-- <x-button-component class="btn-info" href="{{ route('posts.show', $post['id']) }}">
                         Show
-                    </x-button-component>
+                    </x-button-component> --}}
+                    <a href="{{ route('posts.show', $post->slug) }}" class="btn btn-sm btn-info">Show</a>
 
                     <x-button-component class="btn-secondary" href="{{ route('posts.edit', $post['id']) }}">
                         Edit

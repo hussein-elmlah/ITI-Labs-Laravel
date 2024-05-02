@@ -20,11 +20,18 @@ class PostController extends Controller
 
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::find($id);
+        // dd($slug);
+        $post = Post::where('slug', $slug)->first();
         return $post ? view('posts.show', ["post" => $post]) : abort(404);
     }
+
+    // public function show($id)
+    // {
+    //     $post = Post::find($id);
+    //     return $post ? view('posts.show', ["post" => $post]) : abort(404);
+    // }
 
     public function create()
     {

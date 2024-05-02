@@ -34,7 +34,7 @@
                         Edit
                     </x-button-component>
 
-                    <form action="{{ route('creators.delete', $creator->id) }}" method="POST" style="display: inline-block">
+                    <form action="{{ route('creators.destroy', $creator->id) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this creator?')">Delete</button>
