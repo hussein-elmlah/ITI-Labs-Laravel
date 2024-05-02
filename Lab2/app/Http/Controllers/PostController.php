@@ -9,8 +9,12 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        return view("index", ["posts" => $posts]);
+        // $posts = Post::all();
+        // return view("index", ["posts" => $posts]);
+
+        $posts = Post::paginate(5,['*'],'posts');
+        return view('index', compact('posts'));
+
     }
 
     public function show($id)

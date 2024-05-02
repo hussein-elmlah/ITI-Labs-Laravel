@@ -46,6 +46,13 @@
             @endforeach
         </tbody>
     </table>
+
+<div class="row text-center justify-content-center ">
+    <div class="w-auto text-center">
+        {{ $posts->links() }}
+    </div>
+</div>
+
 @else
     <p>No posts found!</p>
 @endif
