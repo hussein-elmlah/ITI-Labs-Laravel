@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Creator extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'creator_id'];
+    protected $fillable = ['name', 'email'];
 
     public $timestamps = true;
 
-    public function creator()
+    public function posts()
     {
-        return $this->belongsTo(Creator::class);
+        return $this->hasMany(Post::class);
     }
 }

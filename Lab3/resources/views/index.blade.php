@@ -10,7 +10,7 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Author</th>
+                <th>creator_id</th>
                 <th>Image</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
@@ -23,7 +23,7 @@
                 <td>{{ $post['id'] }}</td>
                 <td>{{ $post['title'] }}</td>
                 <td>{{ Str::limit($post['description'], 50) }}</td>
-                <td>{{ $post['author'] }}</td>
+                <td>{{ $post['creator_id'] }}</td>
                 <td><img src="{{ asset($post->image) }}" alt="" class="" style="width:80px; height:80px"></td>
                 <td>{{$post['created_at']}}</td>
                 <td>{{$post['updated_at']}}</td>

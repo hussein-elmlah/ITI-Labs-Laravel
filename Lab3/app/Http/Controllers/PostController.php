@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Creator;
 
 class PostController extends Controller
 {
@@ -25,7 +28,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view("create");
+        $creators = Creator::all();
+        return view('create', compact('creators'));
     }
 
     private function file_operations($request)
@@ -45,19 +49,41 @@ class PostController extends Controller
         return null;
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $requestParams = request();
-        $filePath = $this->file_operations($requestParams);
+        $validated = $request->validated();
 
-        $requestParams = request()->all();
-        $requestParams['image'] = $filePath;
+        $filePath = null;
+        if ($request->hasFile('image')) {
 
-        $post = Post::create($requestParams);
-        $post->save();
+            $requestParams = request();
+            $filePath = $this->file_operations($requestParams);
+
+            $validated['image'] = $filePath;
+        } else {
+            $validated['image'] = "https://assets.materialup.com/uploads/9ffe2f61-1193-494f-97a3-d9e334335ae0/preview.jpg";
+        }
+
+        $post = Post::create($validated);
 
         return to_route('posts.index');
+        // return redirect('\posts');
+
     }
+
+    // public function store(Request $request)
+    // {
+    //     $requestParams = request();
+    //     $filePath = $this->file_operations($requestParams);
+
+    //     $requestParams = request()->all();
+    //     $requestParams['image'] = $filePath;
+
+    //     $post = Post::create($requestParams);
+    //     $post->save();
+
+    //     return to_route('posts.index');
+    // }
 
     public function edit($id)
     {

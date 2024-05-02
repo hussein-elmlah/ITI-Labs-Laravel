@@ -4,7 +4,9 @@
 <div class="container">
     <h1>Create Post</h1>
     <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf <div class="mb-3">
+        @csrf
+
+        <div class="mb-3">
             <label for="title" class="form-label">Title:</label>
             <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
             @error('title')
@@ -25,9 +27,13 @@
         </div>
 
         <div class="mb-3">
-            <label for="author" class="form-label">Author:</label>
-            <input type="text" id="author" name="author" class="form-control @error('author') is-invalid @enderror" value="{{ old('author') }}">
-            @error('author')
+            <label for="creator_id" class="form-label">Creator:</label>
+            <select id="creator_id" name="creator_id" class="form-control @error('creator_id') is-invalid @enderror">
+                @foreach ($creators as $creator)
+                    <option value="{{ $creator->id }}">{{ $creator->name }}</option>
+                @endforeach
+            </select>
+            @error('creator_id')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
