@@ -15,7 +15,8 @@
                 <div class="card my-3">
                     <div class="card-body">
                         <h2>Author Info</h2>
-                        <p><strong>Author:</strong> {{ $post['author'] }}</p>
+                        <p><strong>Name:</strong> {{ $post->creator->name }}</p>
+                        <p><strong>Email:</strong> {{ $post->creator->email }}</p>
                     </div>
                 </div>
                 <a href="{{ url()->previous() }}" class="btn btn-primary my-4">Back</a>

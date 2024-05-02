@@ -3,6 +3,8 @@
 @section("content")
 <h1>All Posts</h1>
 
+<a href="{{ route('posts.create') }}" class="btn btn-success my-3">Create New Post</a>
+
 @if(count($posts) > 0)
     <table class="table">
         <thead class="table-dark">
@@ -25,8 +27,10 @@
                 <td>{{ Str::limit($post['description'], 50) }}</td>
                 <td>{{ $post['creator_id'] }}</td>
                 <td><img src="{{ asset($post->image) }}" alt="" class="" style="width:80px; height:80px"></td>
-                <td>{{$post['created_at']}}</td>
-                <td>{{$post['updated_at']}}</td>
+
+                <td>{{ Carbon\Carbon::parse($post->created_at)->format('d/m/Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($post->updated_at)->format('d/m/Y') }}</td>
+
                 <td>
                     <x-button-component class="btn-info" href="{{ route('posts.show', $post['id']) }}">
                         Show
@@ -57,7 +61,5 @@
 @else
     <p>No posts found!</p>
 @endif
-
-<a href="{{ route('posts.create') }}" class="btn btn-success">Create New Post</a>
 
 @endsection

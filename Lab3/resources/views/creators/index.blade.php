@@ -3,6 +3,8 @@
 @section("content")
 <h1>All Creators</h1>
 
+<a href="{{ route('creators.create') }}" class="btn btn-success my-3">Create New Creator</a>
+
 @if(count($creators) > 0)
     <table class="table">
         <thead class="table-dark">
@@ -21,8 +23,8 @@
                 <td>{{ $creator->id }}</td>
                 <td>{{ $creator->name }}</td>
                 <td>{{ $creator->email }}</td>
-                <td>{{$creator->created_at}}</td>
-                <td>{{$creator->updated_at}}</td>
+                <td>{{ Carbon\Carbon::parse($creator->created_at)->format('d/m/Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($creator->updated_at)->format('d/m/Y') }}</td>
                 <td>
                     <x-button-component class="btn-info" href="{{ route('creators.show', $creator->id) }}">
                         Show
@@ -53,7 +55,5 @@
 @else
     <p>No creators found!</p>
 @endif
-
-<a href="{{ route('creators.create') }}" class="btn btn-success">Create New Creator</a>
 
 @endsection
