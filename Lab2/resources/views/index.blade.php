@@ -14,7 +14,7 @@
                 <th>Image</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
-                <th>Actions</th>
+                <th style="width: 200px">Actions</th>
             </tr>
         </thead>
         <tbody>

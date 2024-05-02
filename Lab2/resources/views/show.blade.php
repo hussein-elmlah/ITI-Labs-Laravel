@@ -18,7 +18,7 @@
                         <p><strong>Author:</strong> {{ $post['author'] }}</p>
                     </div>
                 </div>
-                <a href="{{ route('posts.index') }}" class="btn btn-primary my-4">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary my-4">Back</a>
             </div>
         </div>
     </div>
