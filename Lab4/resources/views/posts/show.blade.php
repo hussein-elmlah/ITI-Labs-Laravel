@@ -19,7 +19,14 @@
                         <p><strong>Email:</strong> {{ $post->creator->email }}</p>
                     </div>
                 </div>
-                <a href="{{ url()->previous() }}" class="btn btn-primary my-4">Back</a>
+                @if (
+                    url()->previous() === "http://127.0.0.1:8000/posts" ||
+                    str_starts_with(url()->previous(), "http://127.0.0.1:8000/posts?posts=")
+                )
+                    <a href="{{ url()->previous() }}" class="btn btn-primary my-4">Back</a>
+                 @else
+                    <a href="{{ route('posts.index') }}" class="btn btn-primary my-4">Back</a>
+                @endif
             </div>
         </div>
     </div>
