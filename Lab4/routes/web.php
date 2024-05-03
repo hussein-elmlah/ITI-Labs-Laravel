@@ -46,3 +46,7 @@ Route::post('creators/restore-all', [CreatorController::class,'restoreAll'])->na
 
 // Route::resource('posts', PostController::class);
 Route::resource('creators', CreatorController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
