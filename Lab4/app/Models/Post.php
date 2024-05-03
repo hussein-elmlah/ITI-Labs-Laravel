@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Comment;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Tags\HasTags;
 
 class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
     use Sluggable;
+    use HasTags;
 
     protected $fillable = ['title', 'description', 'image', 'creator_id'];
 

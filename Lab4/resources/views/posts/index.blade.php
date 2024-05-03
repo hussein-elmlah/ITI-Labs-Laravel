@@ -3,9 +3,7 @@
 @section("content")
 <h1>All Posts</h1>
 
-@can('create, App\Models\Post')
-    <a href="{{ route('posts.create') }}" class="btn btn-success my-3">Create New Post</a>
-@endcan
+<a href="{{ route('posts.create') }}" class="btn btn-success my-3">Create New Post</a>
 
 @if(count($posts) > 0)
     <table class="table">

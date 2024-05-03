@@ -7,9 +7,11 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Creator;
+use Spatie\Tags\Tag;
 
 class PostController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,6 +25,23 @@ class PostController extends Controller
         $posts = Post::paginate(5,['*'],'posts');
         return view('posts.index', compact('posts'));
 
+    }
+
+    public function tagged()
+    {
+        $tag = request()->get('tag');
+
+        $tags = Tag::all();
+
+        // Handle empty or null tag
+        if (empty($tag)) {
+            // $posts = Post::paginate(3); // Retrieve and paginate all posts
+            $posts = [];
+        } else {
+            $posts = Post::withAnyTags([$tag])->paginate(3); // Filter and paginate by specific tag(s)
+        }
+
+        return view('posts.tagged', compact('posts', 'tags'));
     }
 
     public function show($slug)
@@ -77,6 +96,20 @@ class PostController extends Controller
         }
 
         $post = Post::create($validated);
+
+        // $tags = collect($request->tags)->map(function ($tag) {
+        //     return Tag::firstOrCreate(['name' => $tag]);
+        // })->pluck('id');
+
+        $tags_str = $request->tags; // Assuming the tags are stored in the 'tags' field of the request object
+
+        # Split the string into individual tags
+        $tags = explode(',', $tags_str);
+
+        # Optional: Remove leading/trailing whitespace from each tag
+        $tags = array_map('trim', $tags);
+
+        $post->syncTags($tags);
 
         return to_route('posts.index');
     }

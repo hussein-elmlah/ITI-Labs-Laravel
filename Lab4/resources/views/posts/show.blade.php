@@ -10,6 +10,11 @@
                         <h2>Post Info</h2>
                         <p><strong>Title:</strong> {{ $post['title'] }}</p>
                         <p><strong>Description:</strong> {{ $post['description'] }}</p>
+                        <p class="card-title"><span>Tags:</span>
+                            @foreach ($post->tags as $tag)
+                                <a href="{{ route('posts.tagged', ['tag' => $tag->slug]) }}" class="">{{ $tag->name }}</a>{{ $loop->last ? '' : ', ' }}
+                            @endforeach
+                        </p>
                     </div>
                 </div>
                 <div class="card my-3">
