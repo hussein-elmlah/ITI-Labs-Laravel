@@ -3,7 +3,9 @@
 @section("content")
 <h1>All Posts</h1>
 
-<a href="{{ route('posts.create') }}" class="btn btn-success my-3">Create New Post</a>
+@can('create, App\Models\Post')
+    <a href="{{ route('posts.create') }}" class="btn btn-success my-3">Create New Post</a>
+@endcan
 
 @if(count($posts) > 0)
     <table class="table">
@@ -32,21 +34,27 @@
                 <td>{{ Carbon\Carbon::parse($post->updated_at)->format('d/m/Y') }}</td>
 
                 <td>
-                    {{-- <x-button-component class="btn-info" href="{{ route('posts.show', $post['id']) }}">
-                        Show
-                    </x-button-component> --}}
                     <a href="{{ route('posts.show', $post->slug) }}" class="btn btn-sm btn-info">Show</a>
 
-                    <x-button-component class="btn-secondary" href="{{ route('posts.edit', $post['id']) }}">
-                        Edit
-                    </x-button-component>
+                    @can('update', $post)
+                        <a href="{{ route('posts.edit', $post['id']) }}" class="btn btn-secondary">Edit</a>
+                    @else
+                        <a href="{{ route('posts.edit', $post['id']) }}" class="btn btn-secondary disabled">Edit</a>
+                    @endcan
 
-                    <form action="{{ route('posts.delete', $post['id']) }}" method="POST" style="display: inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                    </form>
-
+                    @can('delete', $post)
+                        <form action="{{ route('posts.delete', $post['id']) }}" method="POST" style="display: inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
+                    @else
+                        <form action="{{ route('posts.delete', $post['id']) }}" method="POST" style="display: inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger disabled" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
+                    @endcan
                 </td>
             </tr>
             @endforeach
@@ -59,10 +67,12 @@
                 {{ $posts->links() }}
             </div>
         </div>
-        <form action="{{ route('posts.restore.all') }}" method="POST" class="" style="right: 0px;">
-            @csrf
-            <button type="submit" class="btn btn btn-warning">Restore All Deleted</button>
-        </form>
+        @can('forceDelete, App\Models\Post')
+            <form action="{{ route('posts.restore.all') }}" method="POST" class="" style="right: 0px;">
+                @csrf
+                <button type="submit" class="btn btn btn-warning">Restore All Deleted</button>
+            </form>
+        @endcan
     </div>
 
 @else

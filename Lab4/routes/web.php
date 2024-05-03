@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\Post;
 
 /*
@@ -46,6 +47,9 @@ Route::post('creators/restore-all', [CreatorController::class,'restoreAll'])->na
 
 // Route::resource('posts', PostController::class);
 Route::resource('creators', CreatorController::class);
+
+Route::get('profile', [UserProfileController::class,'show'])->name('profile.show');
+// Route::get('profile', 'UserProfileController@show')->name('profile.show');
 
 Auth::routes();
 
