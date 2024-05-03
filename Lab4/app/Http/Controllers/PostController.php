@@ -79,33 +79,23 @@ class PostController extends Controller
         $post = Post::create($validated);
 
         return to_route('posts.index');
-        // return redirect('\posts');
-
     }
-
-    // public function store(Request $request)
-    // {
-    //     $requestParams = request();
-    //     $filePath = $this->file_operations($requestParams);
-
-    //     $requestParams = request()->all();
-    //     $requestParams['image'] = $filePath;
-
-    //     $post = Post::create($requestParams);
-    //     $post->save();
-
-    //     return to_route('posts.index');
-    // }
 
     public function edit($id)
     {
         $post = Post::find($id);
+
+        $this->authorize('update', $post);
+
         return $post ? view('posts.edit', ["post" => $post]) : abort(404);
     }
 
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
+
+        $this->authorize('update', $post);
+
         if ($post) {
             $post->update($request->all());
             return to_route('posts.index');
@@ -117,6 +107,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        $this->authorize('delete', $post);
 
         if ($post) {
 
@@ -131,17 +123,17 @@ class PostController extends Controller
         return abort(404);
     }
 
-    public function restore($id)
-    {
-        $post = Post::withTrashed()->find($id);
+    // public function restore($id)
+    // {
+    //     $post = Post::withTrashed()->find($id);
 
-        if ($post) {
-            $post->restore();
-            return redirect()->route('posts.index');
-        }
+    //     if ($post) {
+    //         $post->restore();
+    //         return redirect()->route('posts.index');
+    //     }
 
-        return abort(404);
-    }
+    //     return abort(404);
+    // }
 
     public function restoreAll()
     {
